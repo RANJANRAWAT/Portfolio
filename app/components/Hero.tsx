@@ -1,5 +1,4 @@
 'use client';
-
 import Image from 'next/image';
 import { useEffect, useRef, useState, MouseEvent } from 'react';
 
@@ -8,9 +7,9 @@ export default function Hero() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [textIndex, setTextIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const heroRef = useRef<HTMLElement | null>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
   const [spotPos, setSpotPos] = useState<{ x: string; y: string }>({ x: '50%', y: '50%' });
-  const avatarRef = useRef<HTMLDivElement | null>(null);
+  const avatarRef = useRef<HTMLDivElement>(null);
   const [tiltAngles, setTiltAngles] = useState<{ rotateX: number; rotateY: number }>({ rotateX: 0, rotateY: 0 });
   const [avatarPos, setAvatarPos] = useState<{ x: number; y: number }>({ x: 50, y: 50 });
 
@@ -37,22 +36,19 @@ export default function Hero() {
       const y = ((e.clientY - rect.top) / rect.height) * 100;
       setSpotPos({ x: `${x}%`, y: `${y}%` });
     };
-
-    window.addEventListener('mousemove', handleMove as any);
-    return () => window.removeEventListener('mousemove', handleMove as any);
+    window.addEventListener('mousemove', handleMove as unknown as EventListener);
+    return () => window.removeEventListener('mousemove', handleMove as unknown as EventListener);
   }, []);
 
   // Typewriter effect
   useEffect(() => {
     const timeout = setTimeout(() => {
       const current = texts[textIndex];
-
       if (isDeleting) {
         setCurrentText(current.substring(0, currentText.length - 1));
       } else {
         setCurrentText(current.substring(0, currentText.length + 1));
       }
-
       if (!isDeleting && currentText === current) {
         setTimeout(() => setIsDeleting(true), 2500);
       } else if (isDeleting && currentText === '') {
@@ -60,19 +56,17 @@ export default function Hero() {
         setTextIndex((prev) => (prev + 1) % texts.length);
       }
     }, isDeleting ? 50 : 100);
-
     return () => clearTimeout(timeout);
-  }, [currentText, isDeleting, textIndex, texts]);
+  }, [currentText, isDeleting, textIndex]);
 
   // Avatar tilt
-  const handleAvatarMove = (e: MouseEvent<HTMLDivElement>) => {
+  const handleAvatarMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = avatarRef.current;
     if (!target) return;
     const rect = target.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
     setAvatarPos({ x, y });
-
     const maxTilt = 16;
     const rotateY = ((x - 50) / 50) * maxTilt;
     const rotateX = -((y - 50) / 50) * maxTilt;
@@ -89,7 +83,7 @@ export default function Hero() {
       id="home"
       ref={heroRef}
       className="relative min-h-screen flex items-center overflow-hidden text-white"
-      style={{ ['--spot-x' as any]: spotPos.x, ['--spot-y' as any]: spotPos.y }}
+      style={{ ['--spot-x']: spotPos.x, ['--spot-y']: spotPos.y } as React.CSSProperties}
     >
       {/* Background layers */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#0c0c14]/80 via-[#121223]/70 to-[#0e0e18]/80"></div>
@@ -120,16 +114,13 @@ export default function Hero() {
             <div className="h-8 mb-6 text-xl text-white/80">
               <span className="align-middle">{currentText}</span>
             </div>
-
             {/* Email */}
             <a href="mailto:ranjanrawat7979@gmail.com" className="inline-block mb-10" style={{ marginTop: '10px' }}>
               <span className="rounded-full border border-fuchsia-400/50 bg-fuchsia-900/10 text-fuchsia-300 font-semibold shadow-sm hover:shadow-fuchsia-500/30 hover:bg-fuchsia-900/20 transition-all duration-300 px-3 py-1">
                 ranjanrawat7979@gmail.com
               </span>
             </a>
-
             <p className="text-white/70 max-w-xl mt-3">Gurgaon, India</p>
-
             {/* Social Icons */}
             <div className="flex items-center gap-4 mt-3">
               {['Facebook', 'Twitter', 'Dribbble'].map((name) => (
@@ -155,7 +146,7 @@ export default function Hero() {
             className={`relative mx-auto w-[16rem] h-[16rem] md:w-[20rem] md:h-[20rem] transition-all duration-700 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}
-            style={{ ['--ax' as any]: `${avatarPos.x}%`, ['--ay' as any]: `${avatarPos.y}%` }}
+            style={{ ['--ax']: `${avatarPos.x}%`, ['--ay']: `${avatarPos.y}%` } as React.CSSProperties}
           >
             <div className="absolute inset-0 rounded-full bg-fuchsia-500/20 blur-3xl"></div>
             <div
