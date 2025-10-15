@@ -138,7 +138,7 @@ export default function Contact() {
             </h2>
             <div className="flex items-center justify-center">
               <p className="text-lg text-slate-300 p-6 max-w-3xl text-center">
-                Have a project in mind? Let's work together to bring your ideas to life.
+                Have a project in mind? Lets work together to bring your ideas to life.
               </p>
             </div>
 
@@ -148,7 +148,7 @@ export default function Contact() {
             {/* Contact Information */}
             <div className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`} >
               <h3 className="text-3xl sm:text-4xl font-bold text-white mb-8" style={{marginLeft:"6%"}}>
-                Let's <span className="bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent">Connect</span>
+                Lets <span className="bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent">Connect</span>
               </h3>
 
               <div className="space-y-6 mb-12" style={{marginLeft:"0%", padding: 16}}>

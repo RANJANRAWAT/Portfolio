@@ -37,7 +37,7 @@ export default function BackgroundFX() {
       const grad = ctx.createRadialGradient(width / 2, height / 2, 0, width / 2, height / 2, Math.max(width, height) * 0.7);
       grad.addColorStop(0, 'rgba(12,12,24,0.85)');
       grad.addColorStop(1, 'rgba(8,8,16,1)');
-      ctx.fillStyle = grad as any;
+      ctx.fillStyle = grad as CanvasGradient;
       ctx.fillRect(0, 0, width, height);
 
       // draw and update particles
